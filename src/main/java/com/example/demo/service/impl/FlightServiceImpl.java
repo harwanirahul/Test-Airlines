@@ -49,14 +49,7 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Flight searchFlight(String source, String destination, Date date) {
-
-		if (fareService.getFareBySourceAndDestination(source, destination) == null)
-			return null;
-		Flight flight = flightRepo.findBySourceAndDestinationAndDate(source, destination, date);
-		if (flight == null) {
-			flight = flightRepo.save(new Flight(source, destination, date));
-		}
-		return flight;
+		return flightRepo.findBySourceAndDestinationAndDate(source, destination, date);
 	}
 
 	@Override

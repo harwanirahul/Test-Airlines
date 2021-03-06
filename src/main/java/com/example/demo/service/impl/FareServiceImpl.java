@@ -37,14 +37,10 @@ public class FareServiceImpl implements FareService {
 	}
 
 	@Override
-	public Fare getFareBySourceAndDestination(String source, String destination) {
-
-		return fareRepo.findBySourceAndDestination(source, destination);
+	public Fare getFareByFlightId(int flight_id) {
+		return fareRepo.findByFlightId(flight_id);
 	}
 
-	@Override
-	public Fare getFareBySourceAndDestinationAndFlight_id(String source, String destination, int flight_id) {
-		return fareRepo.findBySourceAndDestinationAndFlight_id(source, destination, flight_id);
-	}
+
 
 }

@@ -1,38 +1,34 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.FareDto;
 import com.example.demo.entity.Fare;
-import com.example.demo.entity.Flight;
 import com.example.demo.service.FareService;
 
 @RestController
 public class FareController {
+	
 	@Autowired
 	FareService fareService;
 
-	Flight flight;
-
-	@GetMapping("/fare")
-	public List<Fare> getFares() {
-		return fareService.getFares();
+	@GetMapping("/fare-by-flight-id")
+	public String getFareByFlightId(@RequestParam("id") int id) {
+		Fare fare = fareService.getFareByFlightId(id);
+		if (fare == null)
+			return "<h1>Welcome to ABC Airlines </h1> <h2>Kindly enter valid flight Id</h2>";
+		return "<h1>Welcome to ABC Airlines </h1> "
+		+ "<h2>Here are the fare details for requested flightId: </h2>"
+		+ "<strong>Flight ID: </strong>" + fare.getFlight().getId() + "<br><strong>Date: </strong>"
+		+ fare.getFlight().getDate()+ "<br><strong>Source: </strong> " + fare.getFlight().getSource()
+		+ "<br><strong>Destination: </strong>" + fare.getFlight().getDestination() + "<br><strong>Available BusinessClass Seats: </strong>"
+		+ fare.getFlight().getAvailableBusinessClassSeats() + "<br><strong>Available EconomyClass Seats:</strong>"+
+		+ fare.getFlight().getAvailableEconomyClassSeats() + "<br><strong>Business Class Fare </strong>" + fare.getBusinessClassFare() + "<br><strong>Economy Class Fare </strong>" + fare.getEconomyClassFare();
 	}
+	
 
-	@PostMapping("/searchFare")
-	public Fare searchFare(@RequestBody FareDto fdto) {
-		String source = fdto.getSource();
-		String destination = fdto.getDestination();
-		int flight_id = fdto.getFlightId();
-
-		return fareService.getFareBySourceAndDestinationAndFlight_id(source, destination, flight_id);
-
-	}
+	
 
 }

@@ -14,9 +14,7 @@ public interface FareService {
 
 	public void deleteFareById(int id);
 
-	public Fare getFareBySourceAndDestination(String source, String destination);
-
-	public Fare getFareBySourceAndDestinationAndFlight_id(String source, String destination, int flight_id);
+	public Fare getFareByFlightId(int flight_id);
 
 	// public List<Fare> getFareBySourceAndDestinationAndDeparturedate(String
 	// source, String destination, Date d);

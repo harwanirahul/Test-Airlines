@@ -61,8 +61,7 @@ public class BookingController {
 			return map;
 		}
 
-		Fare fare = fareService.getFareBySourceAndDestination(source, destination);
-
+		Fare fare = fareService.getFareByFlightId(flight.getId());
 		Booking booking = bookingService.confirmBooking(passenger, flight, date, preferredClass, fare);
 
 		map.put("Booking id", booking.getId());
