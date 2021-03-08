@@ -37,10 +37,10 @@ public class FlightServiceImpl implements FlightService {
 		return flightRepo.findAll();
 	}
 
-	@Override
-	public void deleteFlightById(int id) {
-		flightRepo.deleteById(id);
-	}
+//	@Override
+//	public void deleteFlightById(int id) {
+//		flightRepo.deleteById(id);
+//	}
 
 	@Override
 	public Flight getFlightBySourceAndDestinationAndDate(String source, String destination, Date d) {
