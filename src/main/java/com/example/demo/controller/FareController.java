@@ -15,7 +15,7 @@ public class FareController {
 	FareService fareService;
 
 	@GetMapping("/fare-by-flight-id")
-	public String getFareByFlightId(@RequestParam("id") int id) {
+	public String getFareByFlightId(@RequestParam(name = "id", required = true) int id) {
 		Fare fare = fareService.getFareByFlightId(id);
 		if (fare == null)
 			return "<h1>Welcome to ABC Airlines </h1> <h2>Kindly enter valid flight Id</h2>";

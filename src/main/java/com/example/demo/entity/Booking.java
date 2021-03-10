@@ -50,12 +50,15 @@ public class Booking {
 	}
 
 	public Booking(Passenger passenger, Flight flight, Date onBoardingDate, int fare, PreferredClass preferredClass) {
+		
 		this.onBoardingDate = onBoardingDate;
 		this.passenger = passenger;
 		this.flight = flight;
 		this.fare = fare;
 		this.preferredClass = preferredClass;
+		
 	}
+	
 
 	public int getId() {
 		return id;

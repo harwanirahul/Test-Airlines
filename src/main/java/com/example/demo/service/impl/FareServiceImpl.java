@@ -17,7 +17,7 @@ public class FareServiceImpl implements FareService {
 
 	@Override
 	public Boolean save(Fare f) {
-		fareRepo.save(f);
+		fareRepo.save(f); 
 		return null;
 	}
 
