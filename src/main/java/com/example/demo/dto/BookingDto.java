@@ -16,7 +16,7 @@ public class BookingDto {
 
 	private String destination;
 
-	private Date date;
+	private Date date; 
 	
 	private PreferredClass preferredClass;
 

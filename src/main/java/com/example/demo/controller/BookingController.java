@@ -35,7 +35,7 @@ public class BookingController {
 
 	@Autowired
 	FareService fareService;
-
+ 
 	@Autowired
 	BookingService bookingService;
 
