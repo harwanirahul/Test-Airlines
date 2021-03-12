@@ -35,7 +35,7 @@ public class FlightTest {
 		Flight fid = flightService.getFlightById(id);
 		if (fid != null) {
 
-			if (preferredClass.equals(PreferredClass.BusinessClass)) {
+			if (preferredClass.equals(PreferredClass.BUSINESSCLASS)) {
 				if (fid.getAvailableBusinessClassSeats() > 0) {
 					return true;
 				} else {
@@ -67,10 +67,10 @@ public class FlightTest {
 
 	@Test
 	public void checkSeat() {
-		assertTrue(CheckSeat(PreferredClass.BusinessClass, 1));
-		assertFalse(CheckSeat(PreferredClass.EconomyClass, 3));
-		assertTrue(CheckSeat(PreferredClass.EconomyClass, 1));
-		assertFalse(CheckSeat(PreferredClass.BusinessClass, 3));
+		assertTrue(CheckSeat(PreferredClass.BUSINESSCLASS, 1));
+		assertFalse(CheckSeat(PreferredClass.ECONOMYCLASS, 3));
+		assertTrue(CheckSeat(PreferredClass.ECONOMYCLASS, 1));
+		assertFalse(CheckSeat(PreferredClass.BUSINESSCLASS, 3));
 
 	}
 

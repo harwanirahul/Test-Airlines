@@ -13,12 +13,13 @@ public class FlightServiceTest {
 
 	@Autowired
 	FlightService flightService;
-	
+
 	@Test
 	public void testSearchFlight() {
-		String source = "chennai";
-		String destination = "mumbai";
-		Date date = Date.valueOf("2021-03-06");
+		String source = "mumbai";
+		String destination = "chennai";
+		Date date = Date.valueOf("2021-04-05");
 		assertNotNull(flightService.searchFlight(source, destination, date));
 	}
+
 }

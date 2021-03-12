@@ -54,7 +54,7 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public Boolean checkSeatAvailability(Flight flight, PreferredClass preferredClass) {
-		if (preferredClass == PreferredClass.BusinessClass && flight.getAvailableBusinessClassSeats() <= 0)
+		if (preferredClass == PreferredClass.BUSINESSCLASS && flight.getAvailableBusinessClassSeats() <= 0)
 			return false;
 		else if (flight.getAvailableEconomyClassSeats() <= 0)
 			return false;
@@ -64,11 +64,17 @@ public class FlightServiceImpl implements FlightService {
 
 	@Override
 	public void updateSeatAvaialability(Flight flight, PreferredClass preferredClass) {
-		if (preferredClass == PreferredClass.BusinessClass)
+		if (preferredClass == PreferredClass.BUSINESSCLASS)
 			flight.setAvailableBusinessClassSeats(flight.getAvailableBusinessClassSeats() - 1);
 		else
 			flight.setAvailableEconomyClassSeats(flight.getAvailableEconomyClassSeats() - 1);
 		flight = flightRepo.save(flight);
+
+	}
+
+	@Override
+	public void deleteFlightById(int id) {
+		// TODO Auto-generated method stub
 
 	}
 

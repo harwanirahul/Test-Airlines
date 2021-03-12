@@ -60,11 +60,13 @@ public class BookingServiceImpl implements BookingService {
 			Fare fare) {
 		Booking booked = null;
 		passengerService.save(passenger);
-		if(preferredClass == PreferredClass.BusinessClass) 
-			booked = bookingService.save(new Booking(passenger, flight, date, fare.getBusinessClassFare(), preferredClass));
-		else if(preferredClass == PreferredClass.EconomyClass)
-			booked = bookingService.save(new Booking(passenger, flight, date, fare.getEconomyClassFare(), preferredClass));
-		
+		if (preferredClass == PreferredClass.BUSINESSCLASS)
+			booked = bookingService
+					.save(new Booking(passenger, flight, date, fare.getBusinessClassFare(), preferredClass));
+		else if (preferredClass == PreferredClass.ECONOMYCLASS)
+			booked = bookingService
+					.save(new Booking(passenger, flight, date, fare.getEconomyClassFare(), preferredClass));
+
 		flightService.updateSeatAvaialability(flight, preferredClass);
 		return booked;
 	}

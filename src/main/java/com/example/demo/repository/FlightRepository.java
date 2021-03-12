@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.transaction.Transactional;
 
