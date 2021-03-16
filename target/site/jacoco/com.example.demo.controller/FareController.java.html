@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FareController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">airlines</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.controller</a> &gt; <span class="el_source">FareController.java</span></div><h1>FareController.java</h1><pre class="source lang-java linenums">package com.example.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Fare;
+import com.example.demo.service.FareService;
+
+@RestController
+<span class="fc" id="L12">public class FareController {</span>
+	
+	@Autowired
+	FareService fareService;
+
+	@GetMapping(&quot;/fare-by-flight-id&quot;)
+	public String getFareByFlightId(@RequestParam(name = &quot;id&quot;, required = true) int id) {
+<span class="fc" id="L19">		Fare fare = fareService.getFareByFlightId(id);</span>
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">		if (fare == null)</span>
+<span class="nc" id="L21">			return &quot;&lt;h1&gt;Welcome to ABC Airlines &lt;/h1&gt; &lt;h2&gt;Kindly enter valid flight Id&lt;/h2&gt;&quot;;</span>
+<span class="fc" id="L22">		return &quot;&lt;h1&gt;Welcome to ABC Airlines &lt;/h1&gt; &quot;</span>
+		+ &quot;&lt;h2&gt;Here are the fare details for requested flightId: &lt;/h2&gt;&quot;
+<span class="fc" id="L24">		+ &quot;&lt;strong&gt;Flight ID: &lt;/strong&gt;&quot; + fare.getFlight().getId() + &quot;&lt;br&gt;&lt;strong&gt;Date: &lt;/strong&gt;&quot;</span>
+<span class="fc" id="L25">		+ fare.getFlight().getDate()+ &quot;&lt;br&gt;&lt;strong&gt;Source: &lt;/strong&gt; &quot; + fare.getFlight().getSource()</span>
+<span class="fc" id="L26">		+ &quot;&lt;br&gt;&lt;strong&gt;Destination: &lt;/strong&gt;&quot; + fare.getFlight().getDestination() + &quot;&lt;br&gt;&lt;strong&gt;Available BusinessClass Seats: &lt;/strong&gt;&quot;</span>
+<span class="fc" id="L27">		+ fare.getFlight().getAvailableBusinessClassSeats() + &quot;&lt;br&gt;&lt;strong&gt;Available EconomyClass Seats:&lt;/strong&gt;&quot;+</span>
+<span class="fc" id="L28">		+ fare.getFlight().getAvailableEconomyClassSeats() + &quot;&lt;br&gt;&lt;strong&gt;Business Class Fare &lt;/strong&gt;&quot; + fare.getBusinessClassFare() + &quot;&lt;br&gt;&lt;strong&gt;Economy Class Fare &lt;/strong&gt;&quot; + fare.getEconomyClassFare();</span>
+	}
+	
+
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -17,8 +17,8 @@ public class FareServiceImpl implements FareService {
 
 	@Override
 	public Boolean save(Fare f) {
-		fareRepo.save(f); 
-		return null;
+		fareRepo.save(f);
+		return true;
 	}
 
 	@Override
@@ -37,10 +37,8 @@ public class FareServiceImpl implements FareService {
 	}
 
 	@Override
-	public Fare getFareByFlightId(int flight_id) {
-		return fareRepo.findByFlightId(flight_id);
+	public Fare getFareByFlightId(int flightId) {
+		return fareRepo.findByFlightId(flightId);
 	}
-
-
 
 }

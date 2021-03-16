@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,12 +23,12 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.example.demo.AirlinesApplicationTests;
 import com.example.demo.entity.Flight;
 import com.example.demo.service.FlightService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @ExtendWith(MockitoExtension.class)
-public class FlightControllerTest {
+public class FlightControllerTest extends AirlinesApplicationTests {
 
 	@Mock
 	FlightService flightService;
@@ -38,7 +39,7 @@ public class FlightControllerTest {
 	private MockMvc mockMvc;
 
 	String source = "chennai";
-	String destination = "mumbai"; 
+	String destination = "mumbai";
 	String date = "2021-03-06";
 
 	@BeforeEach
@@ -58,7 +59,7 @@ public class FlightControllerTest {
 	public void testSearchFlight() throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("source", source);
-		map.put("destination", destination); 
+		map.put("destination", destination);
 		map.put("date", date);
 
 		when(flightService.getFlightBySourceAndDestinationAndDate(source, destination, Date.valueOf(date)))
@@ -77,25 +78,15 @@ public class FlightControllerTest {
 	public void testSearchFlight_whenNoFlightFound() throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("source", source);
-		map.put("destination", destination); 
+		map.put("destination", destination);
 		map.put("date", date);
-
-//		when(flightService.getFlightBySourceAndDestinationAndDate(source, destination, Date.valueOf(date))).thenReturn(getFlight());
-
-//		System.out.println(asJsonString(map));
 
 		MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/search-flight")
 				.contentType(MediaType.APPLICATION_JSON).content(asJsonString(map));
 
-//		MvcResult result = mockMvc.perform(requestBuilder).andExpect(status().isNotFound()).andReturn();
-//		assertTrue(result.getResponse().getContentAsString().contains("No flight found for the given criteria"));
-
-		
 		mockMvc.perform(requestBuilder).andExpect(status().isNotFound())
 				.andExpect(jsonPath("error", Matchers.equalTo("No flight found for the given criteria")));
 	}
-
-//	====================== HELPER METHODS ======================
 
 	private List<Flight> getFlights() {
 		List<Flight> flights = new ArrayList<>();
@@ -110,16 +101,6 @@ public class FlightControllerTest {
 		flight.setDestination(destination);
 		flight.setDate(Date.valueOf(date));
 		return flight;
-	}
-
-	public static String asJsonString(final Object obj) {
-		try {
-			final ObjectMapper mapper = new ObjectMapper();
-			final String jsonContent = mapper.writeValueAsString(obj);
-			return jsonContent;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

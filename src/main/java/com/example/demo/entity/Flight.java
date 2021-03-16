@@ -33,13 +33,6 @@ public class Flight {
 	public Flight() {
 	}
 
-	public Flight(String source, String destination,
-			Date date) {
-		this.source = source;
-		this.destination = destination;
-		this.date = date;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -87,5 +80,5 @@ public class Flight {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 }

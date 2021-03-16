@@ -1,7 +1,13 @@
 package com.example.demo.common;
 
 public class Common {
-	public static enum PreferredClass {
-		BusinessClass, EconomyClass
+
+	public enum PreferredClass {
+		BUSINESSCLASS, ECONOMYCLASS
 	}
+
+	public enum Gender {
+		MALE, FEMALE, OTHER
+	}
+
 }

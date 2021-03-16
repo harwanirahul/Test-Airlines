@@ -9,6 +9,6 @@ import com.example.demo.entity.Fare;
 @Transactional
 public interface FareRepository extends JpaRepository<Fare, Integer> {
 
-	public Fare findByFlightId(int flight_id);
+	public Fare findByFlightId(int flightId);
 
 }

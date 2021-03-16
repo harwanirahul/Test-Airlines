@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">airlines</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.controller</a> &gt; <span class="el_source">BookingController.java</span></div><h1>BookingController.java</h1><pre class="source lang-java linenums">package com.example.demo.controller;
+
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.common.Common.PreferredClass;
+import com.example.demo.dto.BookingDto;
+import com.example.demo.entity.Booking;
+import com.example.demo.entity.Fare;
+import com.example.demo.entity.Flight;
+import com.example.demo.entity.Passenger;
+import com.example.demo.service.BookingService;
+import com.example.demo.service.FareService;
+import com.example.demo.service.FlightService;
+import com.example.demo.service.PassengerService;
+
+@RestController
+<span class="fc" id="L27">public class BookingController {</span>
+
+	@Autowired
+	FlightService flightService;
+
+	@Autowired
+	PassengerService passengerService;
+
+	@Autowired
+	FareService fareService;
+
+	@Autowired
+	BookingService bookingService;
+
+	@PostMapping(&quot;/bookTicket&quot;)
+	public Map&lt;String, Object&gt; bookTicket(@RequestBody BookingDto bookingDto) {
+<span class="fc" id="L43">		Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L44">		Passenger passenger = bookingDto.getPassenger();</span>
+<span class="fc" id="L45">		String source = bookingDto.getSource();</span>
+<span class="fc" id="L46">		String destination = bookingDto.getDestination();</span>
+<span class="fc" id="L47">		Date date = bookingDto.getDate();</span>
+<span class="fc" id="L48">		PreferredClass preferredClass = bookingDto.getPreferredClass();</span>
+
+<span class="fc" id="L50">		Flight flight = flightService.searchFlight(source, destination, date);</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">		if (flight == null) {</span>
+<span class="nc" id="L52">			map.put(&quot;Ërror&quot;, &quot;No flight found for the selected cities&quot;);</span>
+<span class="nc" id="L53">			return map;</span>
+		}
+
+<span class="fc" id="L56">		Boolean isSeatAvailable = flightService.checkSeatAvailability(flight, preferredClass);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (!isSeatAvailable) {</span>
+<span class="nc" id="L58">			map.put(&quot;Sorry!&quot;, &quot;No &quot; + preferredClass + &quot; seats available&quot;);</span>
+<span class="nc" id="L59">			return map;</span>
+		}
+
+<span class="fc" id="L62">		Fare fare = fareService.getFareByFlightId(flight.getId());</span>
+<span class="fc" id="L63">		Booking booking = bookingService.confirmBooking(passenger, flight, date, preferredClass, fare);</span>
+
+<span class="fc" id="L65">		map.put(&quot;Booking id&quot;, booking.getId());</span>
+<span class="fc" id="L66">		map.put(&quot;Name&quot;, passenger.getName());</span>
+<span class="fc" id="L67">		map.put(&quot;Age&quot;, passenger.getAge());</span>
+<span class="fc" id="L68">		map.put(&quot;Gender&quot;, passenger.getGender());</span>
+<span class="fc" id="L69">		map.put(&quot;source&quot;, source);</span>
+<span class="fc" id="L70">		map.put(&quot;destination&quot;, destination);</span>
+<span class="fc" id="L71">		map.put(&quot;Preferred Class&quot;, preferredClass);</span>
+<span class="fc" id="L72">		map.put(&quot;fare&quot;, booking.getFare());</span>
+
+<span class="fc" id="L74">		return map;</span>
+	}
+
+	@GetMapping(&quot;/getTicket&quot;)
+	public String getTicket(@RequestParam(&quot;id&quot;) int id) {
+<span class="nc" id="L79">		Booking booking = bookingService.getBookingById(id);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">		if (booking == null)</span>
+<span class="nc" id="L81">			return &quot;&lt;h1&gt;Welcome to ABC Airlines &lt;/h1&gt; &lt;h2&gt;No booking found with the id:&quot; + id + &quot; &lt;/h2&gt;&quot;;</span>
+<span class="nc" id="L82">		return &quot;&lt;h1&gt;Welcome to ABC Airlines &lt;/h1&gt; &quot;</span>
+				+ &quot;&lt;h2&gt;Your booking has been confirmed. Kindly refer the details: &lt;/h2&gt;&quot;
+<span class="nc" id="L84">				+ &quot;&lt;strong&gt;Booking ID: &lt;/strong&gt;&quot; + booking.getId() + &quot;&lt;br&gt;&lt;strong&gt;Name: &lt;/strong&gt;&quot;</span>
+<span class="nc" id="L85">				+ booking.getPassenger().getName() + &quot;&lt;br&gt;&lt;strong&gt;Age: &lt;/strong&gt; &quot; + booking.getPassenger().getAge()</span>
+<span class="nc" id="L86">				+ &quot;&lt;br&gt;&lt;strong&gt;Gender: &lt;/strong&gt;&quot; + booking.getPassenger().getGender() + &quot;&lt;br&gt;&lt;strong&gt;Source: &lt;/strong&gt;&quot;</span>
+<span class="nc" id="L87">				+ booking.getFlight().getSource() + &quot;&lt;br&gt;&lt;strong&gt;Destination: &lt;/strong&gt;&quot;</span>
+<span class="nc" id="L88">				+ booking.getFlight().getDestination() + &quot;&lt;br&gt;&lt;strong&gt;Preferred Class: &lt;/strong&gt; &quot;</span>
+<span class="nc" id="L89">				+ booking.getPreferredClass() + &quot;&lt;br&gt;&lt;strong&gt;Fare: &lt;/strong&gt;&quot; + booking.getFare();</span>
+	}
+
+	@GetMapping(&quot;/all-bookings&quot;)
+	public List&lt;Booking&gt; getAllBookings() {
+<span class="nc" id="L94">		return bookingService.getBookings();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

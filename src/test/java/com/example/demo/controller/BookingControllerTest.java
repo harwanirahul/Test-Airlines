@@ -1,81 +1,76 @@
 package com.example.demo.controller;
 
-import static org.mockito.Mockito.when;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import com.example.demo.AirlinesApplicationTests;
+import com.example.demo.common.Common.Gender;
+import com.example.demo.common.Common.PreferredClass;
 import com.example.demo.dto.BookingDto;
 import com.example.demo.entity.Passenger;
-//import com.example.demo.entity.Passenger.Gender;
-import com.example.demo.service.BookingService;
-import com.example.demo.service.FareService;
-import com.example.demo.service.FlightService;
-import com.example.demo.service.PassengerService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@ExtendWith(MockitoExtension.class)
-public class BookingControllerTest {
-	
-	@Mock
-	private FlightService flightService;
-	
-	@Mock
-	private PassengerService passengerService;
-	
-	@Mock
-	private FareService fareService;
-	
-	@Mock
-	private BookingService bookingService;
-	
-	@InjectMocks
-	private BookingController bookingController;
-	
-	BookingDto bookingDto=new BookingDto();
+@SpringBootTest
+@AutoConfigureMockMvc
 
-	
+public class BookingControllerTest extends AirlinesApplicationTests{
+	@Mock
+	BookingController bookingController;
+
+	@Autowired
+	private MockMvc mockMvc;
+
 	@Test
-	public void testBookTicket() throws Exception{
-		
-		when(bookingController.bookTicket(bookingDto)).thenReturn(getBookingdetails());
-		
-		MockHttpServletRequestBuilder requestBuilder=MockMvcRequestBuilders.post("/bookticket");
-		
-		
+	public void testbookTicket() throws Exception {
+		BookingDto bookingDto = new BookingDto();
+		bookingDto.setDestination("Delhi");
+		bookingDto.setPreferredClass(PreferredClass.BUSINESSCLASS);
+		bookingDto.setSource("Pune");
+		bookingDto.setDate(Date.valueOf("2021-04-07"));
+		bookingDto.setPassenger(getPassenger());
+
+		doReturn(getBookingdetails()).when(bookingController).bookTicket(ArgumentMatchers.any());
+		mockMvc.perform(post("/bookTicket").contentType(MediaType.APPLICATION_JSON_VALUE)
+				.content(new ObjectMapper().writeValueAsString(bookingDto)))
+
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(jsonPath("$.destination", is("Delhi")));
+
 	}
 
-	enum Gender {
-		male, female, other
-	};
-
-	private Map<String, Object> getBookingdetails() {
+	public Map<String, Object> getBookingdetails() {
 		Map<String, Object> map = new HashMap<>();
-		map.put("passenger",getPassenger());
-		//map.put("source", )
-		
-		
-		
-		return null;
+		map.put("passenger", getPassenger());
+		map.put("source", "Pune");
+		map.put("destination", "Delhi");
+		map.put("date", Date.valueOf("2021-04-07"));
+		map.put("preferredClass", PreferredClass.BUSINESSCLASS);
+		return map;
 	}
 
-
-	private Object getPassenger() {
-		Passenger passenger=new Passenger();
+	public Passenger getPassenger() {
+		Passenger passenger = new Passenger();
 		passenger.setName("vasavi");
 		passenger.setAge(23);
 		passenger.setContact(12345678);
-		//passenger.setGender(female);
+		passenger.setGender(Gender.FEMALE);
 		return passenger;
 	}
-	
-
-	
 }

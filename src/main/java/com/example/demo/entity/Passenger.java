@@ -8,12 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.example.demo.common.Common.Gender;
+
 @Entity
 public class Passenger {
 
-	enum Gender {
-		male, female, other
-	};
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +55,8 @@ public class Passenger {
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
+	
 
 	public Gender getGender() {
 		return gender;

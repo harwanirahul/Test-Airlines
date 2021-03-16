@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,14 +34,13 @@ public class BookingController {
 
 	@Autowired
 	FareService fareService;
- 
+
 	@Autowired
 	BookingService bookingService;
 
 	@PostMapping("/bookTicket")
-	public Map<String, Object> bookTicket(@RequestBody BookingDto bookingDto) throws ParseException {
+	public Map<String, Object> bookTicket(@RequestBody BookingDto bookingDto) {
 		Map<String, Object> map = new HashMap<>();
-
 		Passenger passenger = bookingDto.getPassenger();
 		String source = bookingDto.getSource();
 		String destination = bookingDto.getDestination();

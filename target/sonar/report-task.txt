@@ -1,0 +1,6 @@
+projectKey=com.demo:airlines
+serverUrl=http://localhost:9000
+serverVersion=6.5.0.27846
+dashboardUrl=http://localhost:9000/dashboard/index/com.demo:airlines
+ceTaskId=AXg0bp8juPt-hotRz2IB
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXg0bp8juPt-hotRz2IB

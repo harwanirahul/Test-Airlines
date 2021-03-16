@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Booking.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">airlines</a> &gt; <a href="index.source.html" class="el_package">com.example.demo.entity</a> &gt; <span class="el_source">Booking.java</span></div><h1>Booking.java</h1><pre class="source lang-java linenums">package com.example.demo.entity;
+
+import java.sql.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.example.demo.common.Common.PreferredClass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+public class Booking {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@Column(name = &quot;on_boarding_date&quot;)
+	private Date onBoardingDate;
+
+	@Column(name = &quot;booked_date&quot;)
+	@CreationTimestamp
+	private Date bookedDate;
+
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Passenger passenger;
+
+	@JsonIgnore
+	@OneToOne(cascade = {CascadeType.ALL})
+	private Flight flight;
+
+	@Column(name = &quot;fare&quot;)
+	private int fare;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = &quot;preferred_class&quot;)
+	private PreferredClass preferredClass;
+	
+<span class="fc" id="L48">	public Booking() {</span>
+		
+<span class="fc" id="L50">	}</span>
+
+<span class="fc" id="L52">	public Booking(Passenger passenger, Flight flight, Date onBoardingDate, int fare, PreferredClass preferredClass) {</span>
+		
+<span class="fc" id="L54">		this.onBoardingDate = onBoardingDate;</span>
+<span class="fc" id="L55">		this.passenger = passenger;</span>
+<span class="fc" id="L56">		this.flight = flight;</span>
+<span class="fc" id="L57">		this.fare = fare;</span>
+<span class="fc" id="L58">		this.preferredClass = preferredClass;</span>
+		
+<span class="fc" id="L60">	}</span>
+	
+
+	public int getId() {
+<span class="fc" id="L64">		return id;</span>
+	}
+
+	public void setId(int id) {
+<span class="nc" id="L68">		this.id = id;</span>
+<span class="nc" id="L69">	}</span>
+
+	public Date getOnBoardingDate() {
+<span class="nc" id="L72">		return onBoardingDate;</span>
+	}
+
+	public void setOnBoardingDate(Date onBoardingDate) {
+<span class="nc" id="L76">		this.onBoardingDate = onBoardingDate;</span>
+<span class="nc" id="L77">	}</span>
+
+	public Date getBookedDate() {
+<span class="nc" id="L80">		return bookedDate;</span>
+	}
+
+	public void setBookedDate(Date bookedDate) {
+<span class="nc" id="L84">		this.bookedDate = bookedDate;</span>
+<span class="nc" id="L85">	}</span>
+
+	public Passenger getPassenger() {
+<span class="nc" id="L88">		return passenger;</span>
+	}
+
+	public void setPassenger(Passenger passenger) {
+<span class="nc" id="L92">		this.passenger = passenger;</span>
+<span class="nc" id="L93">	}</span>
+
+	public Flight getFlight() {
+<span class="nc" id="L96">		return flight;</span>
+	}
+
+	public void setFlight(Flight flight) {
+<span class="nc" id="L100">		this.flight = flight;</span>
+<span class="nc" id="L101">	}</span>
+
+	public int getFare() {
+<span class="fc" id="L104">		return fare;</span>
+	}
+
+	public void setFare(int fare) {
+<span class="nc" id="L108">		this.fare = fare;</span>
+<span class="nc" id="L109">	}</span>
+
+	public PreferredClass getPreferredClass() {
+<span class="nc" id="L112">		return preferredClass;</span>
+	}
+
+	public void setPreferredClass(PreferredClass preferredClass) {
+<span class="nc" id="L116">		this.preferredClass = preferredClass;</span>
+<span class="nc" id="L117">	}</span>
+	
+	
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
