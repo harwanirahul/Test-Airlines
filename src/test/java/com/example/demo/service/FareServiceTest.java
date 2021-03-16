@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,7 +17,7 @@ import com.example.demo.service.impl.FareServiceImpl;
 
 @SpringBootTest
 public class FareServiceTest {
-
+	
 	@InjectMocks
 	private FareServiceImpl service;
 
@@ -30,5 +31,4 @@ public class FareServiceTest {
 		Fare fare = service.getFareByFlightId(1);
 		assertNotNull(fare);
 	}
-
 }
