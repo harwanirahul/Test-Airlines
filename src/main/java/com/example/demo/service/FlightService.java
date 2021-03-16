@@ -14,8 +14,6 @@ public interface FlightService {
 
 	public List<Flight> getFlights();
 
-	public void deleteFlightById(int id);
-
 	public Flight getFlightBySourceAndDestinationAndDate(String source, String destination, Date d);
 
 	public Flight searchFlight(String source, String destination, Date date);
