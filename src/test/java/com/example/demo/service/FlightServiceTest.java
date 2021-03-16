@@ -45,7 +45,6 @@ public class FlightServiceTest {
 				Date.valueOf("2021-04-07"));
 		assertNotNull(foundFlight);
 		assertSame("Goa", foundFlight.getDestination());
-
 	}
 
 	@Test
